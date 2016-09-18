@@ -1,0 +1,12 @@
+#
+####### requirements.txt #######
+#
+###### Requirements without Version Specifiers ######
+flask
+flask-wtf
+flask-sqlalchemy
+nose
+gunicorn
+requests
+psycopg2
+cockroachdb
