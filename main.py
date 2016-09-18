@@ -212,9 +212,9 @@ def create_db():
                     url_for('static',filename='11.png',_external=True), id1),
             Product('3D Pen', 'electronics', '$110.31', 'Great for outdoors.',\
                     url_for('static',filename='12.png',_external=True), id0),
-            Product('Bento Box', 'kitchen', '¥7.97', 'Bento Lunch Box', \
+            Product('Bento Box', 'kitchen', '¥70.97', 'Bento Lunch Box', \
                     url_for('static',filename='13.png',_external=True), id1, city='Osaka',country='JPN'),
-            Product('Corkscrew', 'kitchen', '£412.23', 'LM-G10 Metal Professional Corkscrew', \
+            Product('Corkscrew', 'kitchen', '£20.23', 'LM-G10 Metal Professional Corkscrew', \
                     url_for('static',filename='14.png',_external=True), id1, city='Derbyshire', country='UK')
 
         ]
