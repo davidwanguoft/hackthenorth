@@ -189,33 +189,33 @@ def create_db():
     with app.test_request_context():
         prods = [
             Product('Soap','kitchen','$5.50','Very good soap',\
-                    url_for('static',filename='1.png'), id0),
+                    url_for('static',filename='1.png',_external=True), id0),
             Product('Backpack','accessories','$75.00','School Bag',\
-                    url_for('static',filename='2.png'), id1),
+                    url_for('static',filename='2.png',_external=True), id1),
             Product('XPS 13','electronics','$800.34','Sweet laptop',\
-                    url_for('static',filename='3.png'),id0),
+                    url_for('static',filename='3.png',_external=True),id0),
             Product('Mac Air', 'electronics', '$900.24', 'Light laptop', \
-                    url_for('static',filename='4.png'),id0),
+                    url_for('static',filename='4.png',_external=True),id0),
             Product('IPhone Case', 'accessories', '$14.50','Spigen Iphone Case', \
-                    url_for('static',filename='5.png'), id0),
+                    url_for('static',filename='5.png',_external=True), id0),
             Product('Ice Cream Case', 'accessories', '$13.23', 'Ice Cream Iphone Case',\
-                    url_for('static',filename='6.png'), id0),
+                    url_for('static',filename='6.png',_external=True), id0),
             Product('USB Hub', 'electronics', '$18.98', 'Belkin USB Hub', \
-                    url_for('static',filename='7.png'), id1),
+                    url_for('static',filename='7.png',_external=True), id1),
             Product('Headphones', 'electronics', '$79.99', 'Wireless Stereo Headphones', \
-                    url_for('static',filename='8.png'), id1),
+                    url_for('static',filename='8.png',_external=True), id1),
             Product('Fudge', 'kitchen', '£5.40', 'Fudge fudge fudge', \
-                    url_for('static',filename='9.png'), id0, city='London', country='UK'),
+                    url_for('static',filename='9.png',_external=True), id0, city='London', country='UK'),
             Product('Sweater', 'clothing', '$59.50', 'Flame Sweater', \
-                    url_for('static', filename='10.png'), id0),
+                    url_for('static', filename='10.png',_external=True), id0),
             Product('Lava lamp', 'accessories', '$60.12', 'Casual lighting', \
-                    url_for('static',filename='11.png'), id1),
+                    url_for('static',filename='11.png',_external=True), id1),
             Product('3D Pen', 'electronics', '$110.31', 'Great for outdoors.',\
-                    url_for('static',filename='12.png'), id0),
+                    url_for('static',filename='12.png',_external=True), id0),
             Product('Bento Box', 'kitchen', '¥7.97', 'Bento Lunch Box', \
-                    url_for('static',filename='13.png'), id1, city='Osaka',country='JPN'),
+                    url_for('static',filename='13.png',_external=True), id1, city='Osaka',country='JPN'),
             Product('Corkscrew', 'kitchen', '£412.23', 'LM-G10 Metal Professional Corkscrew', \
-                    url_for('static',filename='14.png'), id1, city='Derbyshire', country='UK')
+                    url_for('static',filename='14.png',_external=True), id1, city='Derbyshire', country='UK')
 
         ]
 
@@ -235,6 +235,6 @@ if __name__ == "__main__":
     print(Seller.query[0].id)
     print(Seller.query[1].id)
     print(Product.query[0].id)
-    app.run(host='0.0.0.0',port='8000')
+    app.run(host='0.0.0.0',port='80')
 
 
