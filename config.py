@@ -1,4 +1,4 @@
 SQLALCHEMY_DATABASE_URI = 'cockroachdb://dave@localhost:26257/shoppr_db'
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 CORS_HEADERS = "Content-Type"
-SERVER_NAME = '45.79.191.151'
+SERVER_NAME = 'htn.toastedsesa.me'
