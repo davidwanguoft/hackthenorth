@@ -1,0 +1,39 @@
+<ion-view view-title="shopr">
+
+
+  <div class="login">
+
+  
+    <div ng-if="cards.active">
+        <td-cards>
+          <td-card ng-repeat="product in products" on-destroy="cardDestroyed($index)" on-swipe-left="cardSwipedLeft($index)" on-swipe-right="cardSwipedRight($index)">
+            <div class="image" ng-controller="CardCtrl">
+              <div class="no-text"><i class="icon ion-thumbsdown"></i></div>
+              <div class="yes-text"><i class="icon ion-thumbsup"></i></div>
+              <!-- *************************
+                Discard
+                - The card is removed from the deck and a fly away animation is triggered.
+                - onClickTransitionOut is found in ionic.tdcards.js
+                - Animation can be customized by changing defaults
+              ************************* -->
+              <div class="discard" ng-click="onClickTransitionOut2(card)">{{product.price}}<span ng-show="product.convPrice"><sub>({{product.convPrice}})</sub></span>
+</div>
+              <img ng-src="{{ product.imgurl }}">
+            </div>
+          </td-card>
+          <!-- *************************
+            End Card
+            - 'drag' is set to false. The user cannot drag it.
+            - 'refreshCards()' reloads all cards that have NOT been discarded.
+          ************************* -->
+          <td-card id="end-card" drag="false">
+            <i class="icon ion-ios-refresh" ng-click="refreshCards()"></i>
+          </td-card>
+        </td-cards>
+      </div>
+
+        <!--   <h1 id="mainlogo" >shopr</h1>
+     
+      <a href="#/tab/landing" class="fa fa-shopping-cart" id="davego" > Heyyy </a> -->
+  </div>
+</ion-view>
