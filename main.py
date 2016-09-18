@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from flask import Flask,render_template, request, send_file, redirect, url_for, abort
 from flask_sqlalchemy import SQLAlchemy
 import sqlalchemy.orm
@@ -39,6 +42,7 @@ class Product(db.Model):
         self.imgurl = imgurl
         self.seller_id = seller_id
 
+
     def dict(self):
         return {
             'name': self.name,
@@ -50,6 +54,9 @@ class Product(db.Model):
             'imgurl': self.imgurl,
             'seller_id' : self.seller_id
         }
+
+
+
 
 
 class Seller(db.Model):
@@ -87,8 +94,24 @@ def home():
 @app.route('/api/v1/allprods')
 def get_all_prods():
 
-    prods = Product.query.all()
-    return json.dumps([p.dict() for p in prods])
+    prods = [p.dict() for p in Product.query.all()]
+    for base in prods:
+        if base['country'] != 'Canada':
+            amount = base['price'][1:]
+            if base['country'] == 'UK':
+                fc = 'GBP'
+            elif base['country'] == 'USA':
+                fc = 'USD'
+            elif base['country'] == 'JPN':
+                fc = 'JPY'
+
+            forex = get_forex(curr1=fc,amt=amount)
+            conv = forex['to'][0]['mid']
+            conv = "{0:.2f}".format(conv)
+
+            base['convPrice'] = '$' + conv
+
+    return json.dumps(prods)
 
 @app.route('/api/v1/prodinfo')
 def get_prods():
@@ -103,6 +126,7 @@ def get_prods():
             r.delete
 
     prods = Product.query.filter(Product.category == cat).all()
+
 
     return json.dumps([p.dict() for p in prods])
 
@@ -140,7 +164,7 @@ def get_forex(curr1='USD', curr2='CAD', amt='50'):
 
     resp = json.loads(r.text)
     print(resp)
-
+    return resp
 
 def create_db():
     db.drop_all()
@@ -162,28 +186,38 @@ def create_db():
 
     id0 = Seller.query[0].id
     id1 = Seller.query[1].id
+    with app.test_request_context():
+        prods = [
+            Product('Soap','kitchen','$5.50','Very good soap',\
+                    url_for('static',filename='1.png'), id0),
+            Product('Backpack','accessories','$75.00','School Bag',\
+                    url_for('static',filename='2.png'), id1),
+            Product('XPS 13','electronics','$800.34','Sweet laptop',\
+                    url_for('static',filename='3.png'),id0),
+            Product('Mac Air', 'electronics', '$900.24', 'Light laptop', \
+                    url_for('static',filename='4.png'),id0),
+            Product('IPhone Case', 'accessories', '$14.50','Spigen Iphone Case', \
+                    url_for('static',filename='5.png'), id0),
+            Product('Ice Cream Case', 'accessories', '$13.23', 'Ice Cream Iphone Case',\
+                    url_for('static',filename='6.png'), id0),
+            Product('USB Hub', 'electronics', '$18.98', 'Belkin USB Hub', \
+                    url_for('static',filename='7.png'), id1),
+            Product('Headphones', 'electronics', '$79.99', 'Wireless Stereo Headphones', \
+                    url_for('static',filename='8.png'), id1),
+            Product('Fudge', 'kitchen', '£5.40', 'Fudge fudge fudge', \
+                    url_for('static',filename='9.png'), id0, city='London', country='UK'),
+            Product('Sweater', 'clothing', '$59.50', 'Flame Sweater', \
+                    url_for('static', filename='10.png'), id0),
+            Product('Lava lamp', 'accessories', '$60.12', 'Casual lighting', \
+                    url_for('static',filename='11.png'), id1),
+            Product('3D Pen', 'electronics', '$110.31', 'Great for outdoors.',\
+                    url_for('static',filename='12.png'), id0),
+            Product('Bento Box', 'kitchen', '¥7.97', 'Bento Lunch Box', \
+                    url_for('static',filename='13.png'), id1, city='Osaka',country='JPN'),
+            Product('Corkscrew', 'kitchen', '£412.23', 'LM-G10 Metal Professional Corkscrew', \
+                    url_for('static',filename='14.png'), id1, city='Derbyshire', country='UK')
 
-    prods = [
-        Product('Soap','kitchen','$5.50','Very good soap',\
-                'http://www.healthyblackwoman.com/wp-content/uploads/2015/01/download19.jpg', id0),
-        Product('Backpack','accessories','$75.00','School Bag',\
-                'http://targus.com/content/images/thumbs/0003402_17-groove-backpack.jpeg', id1),
-        Product('XPS 13','electronics','$800.34','Sweet laptop',\
-                'http://www.computershopper.com/var/ezwebin_site/storage/images/media/images/dell-xps-13-2015-angle/1184083-1-eng-US/dell-xps-13-2015-angle.jpg',id0),
-        Product('Mac Air', 'electronics', '$900.24', 'Light laptop', \
-                'http://store.storeimages.cdn-apple.com/4973/as-images.apple.com/is/image/AppleInc/aos/published/images/m/ac/macbook/air/macbook-air-gallery2-2014?wid=978&hei=580&fmt=jpeg&qlt=95&op_sharpen=0&resMode=bicub&op_usm=0.5,0.5,0,0&iccEmbed=0&layer=comp&.v=mIBkR0',id0),
-        Product('IPhone Case', 'accessories', '$14.50','Spigen Iphone Case', \
-                'http://ecx.images-amazon.com/images/I/61OI0s68adL._SL1000_.jpg', id0),
-        Product('Ice Cream Case', 'accessories', '$13.23', 'Ice Cream Iphone Case',\
-                'http://cdn-image.foodandwine.com/sites/default/files/ice_cream_sandwich_iphone_case_0.jpg', id0),
-        Product('USB Hub', 'electronics', '$18.98', 'Belkin USB Hub', \
-                'http://famousonlineshop.com/uploads/product_image/product_663_1.jpg', id1),
-        Product('Headphones', 'electronics', '$79.99', 'Wireless Stereo Headphones', \
-                'http://www.scosche.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/r/h/rh1060-wireless-stereo-headphones.jpg', id1),
-        Product('Fudge', 'kitchen', '£5.40', 'Fudge fudge fudge', \
-                'http://images.media-allrecipes.com/userphotos/250x250/150611.jpg', id0, city='London', country='UK')
-
-    ]
+        ]
 
     def callback(session):
         for p in prods:
