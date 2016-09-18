@@ -121,6 +121,6 @@ if __name__ == "__main__":
     print(Seller.query[0].id)
     print(Seller.query[1].id)
     print(Product.query[0].id)
-    app.run(debug=True)
+    app.run(host='0.0.0.0',port='80')
 
 
