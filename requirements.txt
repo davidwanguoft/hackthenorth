@@ -10,3 +10,4 @@ gunicorn
 requests
 psycopg2
 cockroachdb
+flask-cors

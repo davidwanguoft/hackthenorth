@@ -3,11 +3,15 @@ from flask_sqlalchemy import SQLAlchemy
 import sqlalchemy.orm
 from cockroachdb.sqlalchemy import run_transaction
 import requests
+from flask_cors import CORS, cross_origin
+
 
 import json
 
 app = Flask(__name__)
 app.config.from_pyfile('config.py')     #set as envar in local windows environment.
+CORS(app)
+
 #db.init_app(app)
 db = SQLAlchemy(app)
 sessionmaker = sqlalchemy.orm.sessionmaker(db.engine)
