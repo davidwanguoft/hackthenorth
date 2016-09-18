@@ -25,7 +25,7 @@ class Product(db.Model):
     imgurl = db.Column(db.Text)
     seller_id = db.Column(db.Integer)
 
-    def __init__(self,name,cat,city,country,price,desc,imgurl,seller_id):
+    def __init__(self,name,cat,price,desc,imgurl,seller_id,city='Toronto',country='Canada'):
         self.name = name
         self.category = cat
         self.city = city
@@ -160,14 +160,25 @@ def create_db():
     id1 = Seller.query[1].id
 
     prods = [
-        Product('Soap','kitchen','Toronto','Canada','$5.50','Very good soap',\
+        Product('Soap','kitchen','$5.50','Very good soap',\
                 'http://www.healthyblackwoman.com/wp-content/uploads/2015/01/download19.jpg', id0),
-        Product('Backpack','accessories','Toronto','Canada','$75.00','School Bag',\
+        Product('Backpack','accessories','$75.00','School Bag',\
                 'http://targus.com/content/images/thumbs/0003402_17-groove-backpack.jpeg', id1),
-        Product('XPS 13','electronics','Toronto','Canada','$800.34','Sweet laptop',\
+        Product('XPS 13','electronics','$800.34','Sweet laptop',\
                 'http://www.computershopper.com/var/ezwebin_site/storage/images/media/images/dell-xps-13-2015-angle/1184083-1-eng-US/dell-xps-13-2015-angle.jpg',id0),
-        Product('Mac Air', 'electronics', 'Toronto', 'Canada', '$900.24', 'Light laptop', \
-                'http://store.storeimages.cdn-apple.com/4973/as-images.apple.com/is/image/AppleInc/aos/published/images/m/ac/macbook/air/macbook-air-gallery2-2014?wid=978&hei=580&fmt=jpeg&qlt=95&op_sharpen=0&resMode=bicub&op_usm=0.5,0.5,0,0&iccEmbed=0&layer=comp&.v=mIBkR0',id0)
+        Product('Mac Air', 'electronics', '$900.24', 'Light laptop', \
+                'http://store.storeimages.cdn-apple.com/4973/as-images.apple.com/is/image/AppleInc/aos/published/images/m/ac/macbook/air/macbook-air-gallery2-2014?wid=978&hei=580&fmt=jpeg&qlt=95&op_sharpen=0&resMode=bicub&op_usm=0.5,0.5,0,0&iccEmbed=0&layer=comp&.v=mIBkR0',id0),
+        Product('IPhone Case', 'accessories', '$14.50','Spigen Iphone Case', \
+                'http://ecx.images-amazon.com/images/I/61OI0s68adL._SL1000_.jpg', id0),
+        Product('Ice Cream Case', 'accessories', '$13.23', 'Ice Cream Iphone Case',\
+                'http://cdn-image.foodandwine.com/sites/default/files/ice_cream_sandwich_iphone_case_0.jpg', id0),
+        Product('USB Hub', 'electronics', '$18.98', 'Belkin USB Hub', \
+                'http://famousonlineshop.com/uploads/product_image/product_663_1.jpg', id1),
+        Product('Headphones', 'electronics', '$79.99', 'Wireless Stereo Headphones', \
+                'http://www.scosche.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/r/h/rh1060-wireless-stereo-headphones.jpg', id1),
+        Product('Fudge', 'kitchen', '£5.40', 'Fudge fudge fudge', \
+                'http://images.media-allrecipes.com/userphotos/250x250/150611.jpg', id0, city='London', country='UK')
+
     ]
 
     def callback(session):
