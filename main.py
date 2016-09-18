@@ -109,7 +109,8 @@ def get_all_prods():
             conv = forex['to'][0]['mid']
             conv = "{0:.2f}".format(conv)
 
-            base['convPrice'] = '$' + conv
+            base['convPrice'] = base['price']
+            base['price'] = '$' + conv
 
     return json.dumps(prods)
 
